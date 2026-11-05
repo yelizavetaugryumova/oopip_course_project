@@ -1,5 +1,4 @@
-﻿
-#include "DeliverySystem.h"
+﻿#include "DeliverySystem.h"
 #include <queue>
 
 namespace Delivery {
