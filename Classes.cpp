@@ -1,5 +1,4 @@
-﻿
-#include "Classes.h"
+﻿#include "Classes.h"
 #include <cctype>
 #include <cstdlib>
 #ifdef _WIN32
