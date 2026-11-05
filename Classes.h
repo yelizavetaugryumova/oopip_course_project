@@ -1,5 +1,4 @@
 ﻿#pragma once
-// Classes.h - классы предметной области "Служба доставки еды"
 #pragma once
 #include <iostream>
 #include <iomanip>
@@ -9,7 +8,7 @@
 #include <memory>
 using namespace std;
 
-namespace Delivery {  // собственное пространство имён
+namespace Delivery {  
 
     // Базовый класс исключений программы
     class DeliveryException : public exception {
@@ -38,9 +37,9 @@ namespace Delivery {  // собственное пространство имё�
         NotFoundException(const string& msg) : DeliveryException("Не найдено: " + msg) {}
     };
 
-    //==================== Вспомогательные функции ====================
+ 
 
-    // Встроенная функция: пропуск остатка строки ввода (из листинга темы 4)
+ 
     inline void eatline() { while (cin.get() != '\n') continue; }
 
     vector<string> split(const string& line);  // разбивает строку файла на поля по ';'
@@ -49,7 +48,7 @@ namespace Delivery {  // собственное пространство имё�
     string inputString(const string& prompt);  // ввод непустой строки без символа ';'
     string inputPassword(const string& prompt); // ввод пароля со звёздочками
 
-    // Шаблон функции: ввод числа любого типа в диапазоне [min; max]
+    //  ввод числа любого типа в диапазоне [min; max]
     template <class T>
     T inputNumber(const string& prompt, T min, T max) {
         T value;
@@ -90,9 +89,8 @@ namespace Delivery {  // собственное пространство имё�
         return "?";
     }
 
-    //==================== Базовый класс ====================
 
-    // Абстрактный класс "Запись" (уровень 1)
+    // Абстрактный класс 
     class Entity {
     protected:
         int id;
@@ -109,9 +107,9 @@ namespace Delivery {  // собственное пространство имё�
         virtual string toLine() const = 0;     // строка для записи в файл
     };
 
-    //==================== Пользователи ====================
 
-    // Абстрактный класс "Пользователь" (уровень 2)
+
+    // Абстрактный класс "Пользователь" 
     class User : public Entity {
     protected:
         string login;
@@ -141,7 +139,7 @@ namespace Delivery {  // собственное пространство имё�
         string toLine() const override;
     };
 
-    // Клиент (уровень 3)
+    // Клиент 
     class Client : public User {
         string address;
     public:
@@ -158,7 +156,7 @@ namespace Delivery {  // собственное пространство имё�
         string toLine() const override;
     };
 
-    // Курьер (уровень 3)
+    // Курьер 
     class Courier : public User {
         bool busy;           // занят доставкой
         int deliveredCount;  // выполнено доставок
@@ -181,7 +179,7 @@ namespace Delivery {  // собственное пространство имё�
         string toLine() const override;
     };
 
-    // Администратор (уровень 3)
+    // Администратор 
     class Administrator : public User {
     public:
         Administrator(const string& login, const string& password, const string& name, const string& phone);
@@ -192,7 +190,7 @@ namespace Delivery {  // собственное пространство имё�
         }
     };
 
-    //==================== Рестораны и блюда ====================
+ 
 
     class Restaurant : public Entity {
         string name;
@@ -215,7 +213,6 @@ namespace Delivery {  // собственное пространство имё�
         string toLine() const override;
         static shared_ptr<Restaurant> fromLine(const string& line);
 
-        // Перегрузка операторов ввода/вывода
         friend ostream& operator<<(ostream& os, const Restaurant& restaurant);
         friend istream& operator>>(istream& is, Restaurant& restaurant);
     };
@@ -227,7 +224,7 @@ namespace Delivery {  // собственное пространство имё�
         int restaurantId;
     public:
         Dish() : Entity(0), price(0), restaurantId(0) 
-        {}  // пустой объект для чтения из файла
+        {}  
         Dish(const string& name, const string& category, double price, int restaurantId);
         string getName() const {
             return name; 
@@ -240,7 +237,7 @@ namespace Delivery {  // собственное пространство имё�
         }
         void setName(string value) { 
             name = value; 
-        }   // передача по значению
+        }   
         void setCategory(const string& value) { 
             category = value;
         }
@@ -249,13 +246,13 @@ namespace Delivery {  // собственное пространство имё�
         string toLine() const override;
         static shared_ptr<Dish> fromLine(const string& line);
 
-        // Дружественные функции: перегрузка операторов
+   
         friend ostream& operator<<(ostream& os, const Dish& dish);
         friend istream& operator>>(istream& is, Dish& dish);
         friend bool operator<(const Dish& d1, const Dish& d2);   // сравнение по названию
     };
 
-    //==================== Заказ ====================
+  
 
     // Позиция заказа: название и цена запоминаются на момент заказа
     struct OrderItem {
@@ -277,7 +274,7 @@ namespace Delivery {  // собственное пространство имё�
         Order(int clientId, int restaurantId, const string& address);
         Order(const vector<string>& fields);
 
-        // Перегрузка методов
+       
         void addItem(const OrderItem& item);
         void addItem(const Dish& dish, int quantity);
 
@@ -313,9 +310,9 @@ namespace Delivery {  // собственное пространство имё�
         static shared_ptr<Order> fromLine(const string& line);
     };
 
-    //==================== Отчёт о выручке ====================
+ 
 
-    // Массивы выделяются динамически в конструкторе и освобождаются в деструкторе
+
     class RevenueReport {
         string* names;     // названия ресторанов
         double* revenue;   // выручка каждого ресторана
