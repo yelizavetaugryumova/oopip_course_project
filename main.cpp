@@ -1,5 +1,4 @@
-﻿
-//   admin / admin123 - администратор
+﻿//   admin / admin123 - администратор
 //   courier / courier123 - курьер
 //   client / client123 - клиент
 #include "DeliverySystem.h"
